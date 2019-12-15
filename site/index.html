@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!-- JQUERY -->
+    <script src="js/jquery.js"></script>
+
     <!-- Common CSS & JS -->
     <link rel="stylesheet" href="css/common.css">
     <script src="js/common.js"></script>
 
-    <title>viaJá</title>
+    <title>#SaveMyTrip</title>
 </head>
 <body>
     <header class="header">
@@ -17,7 +20,7 @@
             <img src="imgs/paper-plane.svg">
         </div>
         <div>
-            <h1>Olá, somos a GoTravel</h1>
+            <h1>#SaveMyTrip</h1>
             <p>Queremos te proporcionar uma relação diferente com sua seguradora</p>
 
         </div>
@@ -28,19 +31,19 @@
 
         <form action="apolices.html" class="form">
             <div class="form-input">
-                <input type="text" placeholder="Origem">
+                <input type="text" placeholder="Origem" id="origem">
             </div>
 
             <div class="form-input">
-                <input type="text" placeholder="Destino">
+                <input type="text" placeholder="Destino" id="destino">
             </div>
 
             <div class="form-input">
-                <input type="date" placeholder="Data de embarque" onchange="this.className=(this.value!=''?'has-value':'')">
+                <input type="date" placeholder="Data de embarque" onchange="this.className=(this.value!=''?'has-value':'')" id="embarque">
             </div>
 
             <div class="form-input">
-                <input type="date" placeholder="Data de desembarque" onchange="this.className=(this.value!=''?'has-value':'')">
+                <input type="date" placeholder="Data de desembarque" onchange="this.className=(this.value!=''?'has-value':'')" id="desembarque">
             </div>
 
             <div class="form-input">

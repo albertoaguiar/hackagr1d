@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!-- JQUERY -->
+    <script src="js/jquery.js"></script>
+
     <!-- Common CSS & JS -->
     <link rel="stylesheet" href="css/common.css">
     <script src="js/common.js"></script>
 
-    <title>viaJá</title>
+    <title>#SaveMyTrip</title>
 </head>
 <body>
     <header class="header">
@@ -17,7 +20,7 @@
             <img src="imgs/paper-plane.svg">
         </div>
         <div>
-            <h1>Olá, somos a GoTravel</h1>
+            <h1>#SaveMyTrip</h1>
             <p>Queremos te proporcionar uma relação diferente com sua seguradora</p>
 
         </div>
@@ -27,19 +30,6 @@
 
         <div class="apolices">
             <div class="card_apolice">
-                <div class="img_section">
-                    <img src="https://www.w3schools.com/w3css/img_avatar3.png">
-                </div>
-
-                <div class="texto_apolice">
-
-                    <h1 class="text-center">Nome da empresa que vai oferecer o seguro</h1>
-                    <p class="p_apolice">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper nec enim sed pretium. Nullam non felis sapien. Aliquam in maximus lectus. Proin id est eu erat interdum feugiat in ac nunc. Donec vulputate nisi arcu, non convallis turpis aliquet at. Mauris et ligula ligula. Phasellus et tellus sollicitudin, scelerisque leo sit amet, viverra orci.</p>
-                </div>
-
-                <div class="valor_apolice valor_apolice_detalhe">
-                    <span>R$150,00</span>
-                </div>
             </div>
 
             <div class="aviso_pagamento">
@@ -52,5 +42,41 @@
             </div>
         </div>
     </section>
+
+
+    <script>
+        var is = getParameters();
+
+        var cotacoes = {
+            "cotacoes":[
+                {
+                    "descricao":"Seguro de Viagem completo plusDespesas Médicas, Hospitalares e/ou Odontológicas - DMHO - R$ 10.000,00\nMorte acidental - R$ 80.000,00\nInvalidez Permanente Total ou Parcial por Acidente - R$ 80.000,00",
+                    "operadora":"Travel Ace",
+                    "dataSaida":"20-12-2019",
+                    "dataRetorno":"31-12-2019",
+                    "valorCompra":"R$ 80,00",
+                    "formaPagamento":"Cartão de Crédito",
+                    "imgUrl":"https://www.multiseguroviagem.com.br/www/img/operadoras/hq/travelace.png"},
+                {
+                    "descricao":"Seguro de Viagem completo SupremeDespesas Médicas, Hospitalares e/ou Odontológicas - DMHO - R$ 20.000,00\nMorte acidental - R$ 100.000,00\nInvalidez Permanente Total ou Parcial por Acidente - R$ 100.000,00",
+                    "operadora":"Porto Seguro",
+                    "dataSaida":"20-12-2019",
+                    "dataRetorno":"31-12-2019",
+                    "valorCompra":"R$ 120,00",
+                    "formaPagamento":"Cartão de Crédito",
+                    "imgUrl":"https://www.comparaonline.com.br/blog/wp-content/uploads/2015/10/logo-porto-seguro-1280x720.png"
+                }
+            ]
+        };
+
+        $(".card_apolice").append("<div class='img_section'><img style='width: 170px;' src='"+cotacoes['cotacoes'][is]['imgUrl']+"'></div><div class='texto_apolice'><h1 class='text-center'>"+cotacoes['cotacoes'][is]['operadora']+"</h1><p class='p_apolice'>"+cotacoes['cotacoes'][is]['descricao']+"</p></div><div class='valor_apolice valor_apolice_detalhe'><span>"+cotacoes['cotacoes'][is]['valorCompra']+"</span></div>");
+
+        function getParameters() {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var is = url.searchParams.get("is");
+             return is;
+        }
+    </script>
 </body>
 </html>
