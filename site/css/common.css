@@ -133,3 +133,26 @@
     padding: 10px;
     margin-top: 10px;
 }
+
+h2 {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 25px;
+    color: #13a3d8;
+}
+
+.sucesso {
+    background-color: #38c324;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.erro {
+    background-color: #c32424;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
