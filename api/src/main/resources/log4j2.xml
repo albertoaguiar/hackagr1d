@@ -2,7 +2,7 @@
 <Configuration packages="com.microsoft.applicationinsights.log4j.v2">
     <Properties>
         <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p -[ServiceName: hackagr1d-service] --- [%15.15t] %-40.40c{1.}: %m%n%ex
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p -[ServiceName: hackagr1d-service]: %m%n%ex
         </Property>
     </Properties>
     <Appenders>

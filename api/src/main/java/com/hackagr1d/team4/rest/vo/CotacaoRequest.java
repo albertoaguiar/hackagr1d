@@ -1,24 +1,19 @@
 package com.hackagr1d.team4.rest.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.hackagr1d.team4.domain.model.GenericLoggableObject;
 import com.hackagr1d.team4.domain.model.Passageiros;
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CotacaoRequest {
+public class CotacaoRequest extends GenericLoggableObject {
 
     @JsonProperty
-    @NotBlank
     @ApiModelProperty(value = "Lista de países visitados", example = "[\"GRANADA\",\"ARGENTINA\"]", required = true)
     List<String> destinos = new ArrayList<>();
 
     @JsonProperty
-    @NotBlank
     @ApiModelProperty(value = "Lista de passageiros",  required = true)
     List<Passageiros> passageiros = new ArrayList<>();
     private String dataSaida;
@@ -27,15 +22,11 @@ public class CotacaoRequest {
     private String dataRetorno;
 
     @JsonProperty
-    @NotNull
-    @Size(max = 255)
-    @ApiModelProperty(value = "Tipo da viagem.", example ="1", required = true)
+    @ApiModelProperty(value = "Tipo da viagem.", example ="1")
     private Integer tipoViagem;
 
     @JsonProperty
-    @NotNull
-    @Size(max = 255)
-    @ApiModelProperty(value = "Tipo da tarifa.", example ="1", required = true)
+    @ApiModelProperty(value = "Tipo da tarifa.", example ="1")
     private Integer tipoTarifa;
 
 
