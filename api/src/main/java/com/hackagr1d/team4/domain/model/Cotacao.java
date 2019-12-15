@@ -1,6 +1,6 @@
 package com.hackagr1d.team4.domain.model;
 
-public class Cotacao {
+public class Cotacao extends GenericLoggableObject{
 
     private String descricao;
     private String operadora;

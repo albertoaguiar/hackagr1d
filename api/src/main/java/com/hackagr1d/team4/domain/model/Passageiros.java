@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class Passageiros {
+public class Passageiros extends GenericLoggableObject {
 
     @JsonProperty
     @NotNull

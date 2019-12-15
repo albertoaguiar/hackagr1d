@@ -4,6 +4,8 @@ import com.hackagr1d.team4.domain.model.Cotacao;
 
 import com.hackagr1d.team4.rest.vo.CotacaoRequest;
 import com.hackagr1d.team4.rest.vo.CotacaoResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,15 @@ import java.util.List;
 @Service
 public class CotacaoService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CotacaoService.class);
+
     @Autowired
     public CotacaoService(){
     }
 
     public CotacaoResponse getCotacoes(CotacaoRequest request) {
 
+        LOGGER.info("[Travelace - Seguro Viagens] Buscado cotações - Request["+request +"].");
         CotacaoResponse response =new CotacaoResponse();
         List<Cotacao> cotacoes = new ArrayList<>();
         {
@@ -54,7 +59,7 @@ public class CotacaoService {
 
         response.setCotacoes(cotacoes);
 
-
+        LOGGER.info("[Travelace - Seguro Viagens] Resposta ["+response +"]");
         return response;
     }
 }
