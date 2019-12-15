@@ -1,0 +1,2952 @@
+{
+	"info": {
+		"_postman_id": "c7eb67e0-50d3-4289-8349-7a3d92717a22",
+		"name": "Edge APIs (or front-end APIs)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HEALTH Check - Edge APIs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1099fa9d-dc12-4583-8d12-285fd07f22d0",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/health",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "This endpoint return the status of the services"
+			},
+			"response": []
+		},
+		{
+			"name": "VERSION Check - Edge APIs",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1099fa9d-dc12-4583-8d12-285fd07f22d0",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/info",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"info"
+					]
+				},
+				"description": "This endpoint return the status of the services"
+			},
+			"response": []
+		},
+		{
+			"name": "01 - Create an Account For Individual (CPF)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d0a9a634-ebd5-40f3-aec8-0fc5fb9214dd",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"client\": {\r\n    \"taxIdentifier\": {\r\n      \"taxId\": \"53216374823\",\r\n      \"country\": \"BRA\"\r\n    },\r\n    \"mailAddress\": {\r\n      \"logradouro\": \"Paulista Avenue\",\r\n      \"numero\": \"1578\",\r\n      \"bairro\": \"Bela Vista\",\r\n      \"cidade\": \"São Paulo\",\r\n      \"estado\": \"SP\",\r\n      \"cep\": \"01310200\",\r\n      \"pais\": \"BRA\"\r\n    },\r\n    \"name\": \"Mediator Hack Gr1d\",\r\n    \"email\": \"mediator-gr1d@matera.com\",\r\n    \"mobilePhones\": [\r\n      {\r\n        \"country\": \"BRA\",\r\n        \"phoneNumber\": \"19988036021\"\r\n      }\r\n    ]\r\n  },\r\n  \"password\": \"2changeit\",\r\n  \"agreement\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client"
+					]
+				},
+				"description": "Creates a payment account for an individual"
+			},
+			"response": []
+		},
+		{
+			"name": "01 - Create an Account For Corporate (CNPJ)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d0a9a634-ebd5-40f3-aec8-0fc5fb9214dd",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"client\": {\r\n    \"taxIdentifier\": {\r\n      \"taxId\": \"{{CPF}}\",\r\n      \"country\": \"BRA\"\r\n    },\r\n    \"mailAddress\": {\r\n      \"logradouro\": \"Paulista Avenue\",\r\n      \"numero\": \"1578\",\r\n      \"bairro\": \"Bela Vista\",\r\n      \"cidade\": \"São Paulo\",\r\n      \"estado\": \"SP\",\r\n      \"cep\": \"01310200\",\r\n      \"pais\": \"BRA\"\r\n    },\r\n    \"name\": \"Mediator Fabiano Amaro\",\r\n    \"email\": \"mediator-fabiano01@matera.com\",\r\n    \"mobilePhones\": [\r\n      {\r\n        \"country\": \"BRA\",\r\n        \"phoneNumber\": \"19988036020\"\r\n      }\r\n    ]\r\n  },\r\n  \"password\": \"2changeit\",\r\n  \"agreement\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client"
+					]
+				},
+				"description": "Creates a payment account for an individual"
+			},
+			"response": []
+		},
+		{
+			"name": "02 - Generates the SMS for Phone Number Validation (only with SMS service Enabled)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1099fa9d-dc12-4583-8d12-285fd07f22d0",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client/{{accountHolderId}}/phone/{{phoneNumber}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client",
+						"{{accountHolderId}}",
+						"phone",
+						"{{phoneNumber}}"
+					]
+				},
+				"description": "This endpoint calls the API that generate the SMS that will be used to validate the customer's phone number"
+			},
+			"response": []
+		},
+		{
+			"name": "03 - Log In",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "96ec9da3-2979-4b00-8eee-1d0a435d2176",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "caf90491-2484-4706-b710-534178d9b1f2",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"if (responseCode.code === 200) {",
+							"    postman.setEnvironmentVariable(\"token\", jsonData.data.token);",
+							"} else {",
+							"    postman.setEnvironmentVariable(\"token\", \"! Invalid token !\");",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/login?username=mediator-fabiano01@matera.com&password=2changeit",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "mediator-fabiano01@matera.com"
+						},
+						{
+							"key": "password",
+							"value": "2changeit"
+						}
+					]
+				},
+				"description": "Perfoms the log in on the Oauth Server and return a Oauth Token\n\n* if the response is 200-OK, it comes with the Oauth Token\n\n* to use the other Edge APIs it's required to call the respective API with the header parameter \"authorization\" filled with the value of the Oath Token from the log in response (i.e.  'Authorization: Bearer 98715ae7-daa8-4039-8c7f-0af8f12c626a')\n\n* after the log in process, it's required to execute a new request on the \"/me\" endpoint to load the credentials from the logged account (i.e. \"/v1/edge/me\")"
+			},
+			"response": []
+		},
+		{
+			"name": "04 - Load credentials after Log In",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0187a68e-e357-4c23-be40-07df6dd393e6",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e094912-4c60-46fe-a3fb-e7e43bb99845",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"accountHolderId\",\"<to be set>\");",
+							"postman.setEnvironmentVariable(\"accountId\",\"<to be set>\");",
+							"",
+							"if (responseCode.code === 200) {",
+							"    postman.setEnvironmentVariable(\"accountHolderId\", jsonData.data.accountHolderId);",
+							"    postman.setEnvironmentVariable(\"accountId\", jsonData.data.accounts[0].accountId);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{url}}/v1/edge/me",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"me"
+					]
+				},
+				"description": "This endpoint returns the accountHolderId and accountId that is the primary identification from person and account."
+			},
+			"response": []
+		},
+		{
+			"name": "05 - Check The Account Data after Log In",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a0a5a9c9-46b8-43f8-ac1f-a60cb2f66403",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client/{{accountHolderId}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client",
+						"{{accountHolderId}}"
+					]
+				},
+				"description": "After Login, returns all the information data from a logged in account"
+			},
+			"response": []
+		},
+		{
+			"name": "06 - Generate Boleto for Cash in",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "64a82c6e-90db-4224-92f4-b4e13e091374",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalIdentifier\": \"{{Sequencial}}\",\r\n    \"paymentInfo\": \r\n        {\r\n            \"transactionType\": \"Boleto\",\r\n            \"boleto\": \r\n                {\r\n                    \"bank\": \"341\",\r\n                    \"accountingMethod\": \"DEF\",\r\n                    \"shopperStatement\": \"TEXTO SOB RESPONSABILIDADE DO EMISSOR DO BOLETO (colocar aqui o texto que vai sair no campo 'Instruções')\"\r\n                }\r\n        },\r\n    \"recipients\": \r\n        [\r\n            {\r\n                \"account\": \r\n                    {\r\n                        \"accountId\": \"{{accountId}}\"\r\n                    },\r\n                \"amount\": \"{{AmountRecipient1}}\",\r\n                \"currency\": \"BRL\"\r\n            }\r\n        ]\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/deposit",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"deposit"
+					]
+				},
+				"description": "This API let you generate a boleto to be paid. Means that it's a request that return an object (PDF)"
+			},
+			"response": []
+		},
+		{
+			"name": "07 - Check the Account Balance",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54cb795f-d090-48c1-b39b-88b1bca33d24",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client/{{accountHolderId}}/balance",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client",
+						"{{accountHolderId}}",
+						"balance"
+					]
+				},
+				"description": "For the logged in account, this API returns its balance"
+			},
+			"response": []
+		},
+		{
+			"name": "08 - Check The Account Statement",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "079e4c6f-eb3b-4154-b021-070891da35b8",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/accounts/{{accountId}}/statement?start=2017-10-01&ending=2019-12-31",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"accounts",
+						"{{accountId}}",
+						"statement"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2017-10-01"
+						},
+						{
+							"key": "ending",
+							"value": "2019-12-31"
+						}
+					]
+				},
+				"description": "For the logged in account, this API returns its statement"
+			},
+			"response": []
+		},
+		{
+			"name": "09 - Check The Account Timeline",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78f9ac05-edea-43aa-8c85-9e0a982cf832",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{url}}/v1/edge/timeline/{{accountId}}",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"timeline",
+						"{{accountId}}"
+					]
+				},
+				"description": "By using this API you can check the itens listed on the customer timeline such as debits, credits, request of payments and other information that you may want to show"
+			},
+			"response": []
+		},
+		{
+			"name": "10- Retrieve a operator list for mobile phone recharge",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/country/BRA/area-code/19/operators",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"country",
+						"BRA",
+						"area-code",
+						"19",
+						"operators"
+					]
+				},
+				"description": "Retrieve a operator list"
+			},
+			"response": []
+		},
+		{
+			"name": "11- Retrieve a operator values list for mobile phone recharge",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/country/BRA/area-code/19/operator/2088/values",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"country",
+						"BRA",
+						"area-code",
+						"19",
+						"operator",
+						"2088",
+						"values"
+					]
+				},
+				"description": "Retrieve a operator values list"
+			},
+			"response": []
+		},
+		{
+			"name": "12- Recharge a mobile phone number",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"areaCode\": 19,\r\n  \"mobilePhone\": {\r\n    \"country\": \"BRA\",\r\n    \"phoneNumber\": \"991202815\"\r\n  },\r\n  \"totalAmount\": 15,\r\n  \"paymentType\": \"MobilePhone\",\r\n  \"externalIdentifier\": \"{{Sequencial}}\",\r\n  \"operatorId\": 2088\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client/{{accountHolderId}}/account/{{accountId}}/reload",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client",
+						"{{accountHolderId}}",
+						"account",
+						"{{accountId}}",
+						"reload"
+					]
+				},
+				"description": "Recharge a mobile phone number"
+			},
+			"response": []
+		},
+		{
+			"name": "13- Pay boleto via Celcoin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"value\":\"1374.31\",\r\n   \"externalIdentifier\":\"{{sequencial}}\",\r\n   \"withdrawInfo\":{  \r\n      \"withdrawType\":\"Boleto\",\r\n      \"boleto\":{  \r\n         \"interestAmount\":0,\r\n         \"fineAmount\":0,\r\n         \"documentNumber\":\"{{sequencial}}\",\r\n         \"historyCode\":\"1210\",\r\n         \"beneficiaryTaxIdentifier\": \"46030789000124\",\r\n         \"typeableLine\":\"34191090241004472094300001020007179440000137431\",\r\n         \"dueDate\":\"2019-07-08\"\r\n      },\r\n      \"senderComment\":\"Pagamento de boleto\"\r\n   },\r\n   \"currency\":\"BRL\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/account/{{accountId}}/draft",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"account",
+						"{{accountId}}",
+						"draft"
+					]
+				},
+				"description": "Recharge a mobile phone number"
+			},
+			"response": []
+		},
+		{
+			"name": "14- Pay utility via Celcoin Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"value\":\"129.99\",\r\n   \"externalIdentifier\":\"{{Sequencial}}\",\r\n   \"withdrawInfo\":{  \r\n      \"withdrawType\":\"Utilities\",\r\n      \"utilities\":{  \r\n         \"documentNumber\":\"{{Sequencial}}\",\r\n         \"typeableLine\":\"846400000010299900820893995932436901871576260990\",\r\n         \"beneficiaryTaxIdentifier\":\"02558157000162\",\r\n         \"dueDate\":\"2019-07-21\"\r\n      },\r\n      \"senderComment\":\"Pagamento de conta de consumo\"\r\n   },\r\n   \"currency\":\"BRL\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/account/{{accountId}}/draft",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"account",
+						"{{accountId}}",
+						"draft"
+					]
+				},
+				"description": "Recharge a mobile phone number"
+			},
+			"response": []
+		},
+		{
+			"name": "10 - Pay using phone number",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a72f1a6a-611b-4b3d-98ed-b9d90f00be2b",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"totalAmount\": \"10.00\",\r\n    \"currency\": \"BRL\",\r\n    \"externalIdentifier\": \"{{Sequencial}}\",\r\n    \"sender\": \r\n        {    \r\n            \"account\":\r\n      {\r\n        \"accountId\": \"{{accountId}}\"\r\n      }\r\n      },\r\n    \"paymentInfo\": \r\n        {\r\n            \"transactionType\": \"InternalTransfer\"\r\n        },  \r\n    \"recipients\": \r\n        [\r\n            {\r\n                \"account\": \r\n                    {\r\n                        \"mobilePhone\":\r\n                            {\r\n                                \"country\":\"BRA\",\r\n                                \"phoneNumber\":\"19988031111\"\r\n                            }\r\n                    },\r\n                \"amount\": \"10.00\",\r\n                \"currency\": \"BRL\",      \r\n                \"senderComment\": \"Transf para Correntista (destino)\",\r\n                \"recipientComment\": \"Transf de Correntista (origem)\"\r\n            }\r\n        ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/payments",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"payments"
+					]
+				},
+				"description": "This API perform a internal money transfer (between accounts)\n\n\nThe sender is the one who is logged in at the moment\n\nThe Recipient is the given phone number, that will be related to an account\n\n    \"recipients\": \n        [\n            {\n                \"account\": \n                    {\n                        \"mobilePhone\":\n                            {\n                                \"country\":\"BRA\",\n                                \"phoneNumber\":\"19997416363\" <= phone number from the recipient\n                            }\n                    },\n        :\n        ]"
+			},
+			"response": []
+		},
+		{
+			"name": "xx- Add a Card to user wallet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec9fd87-3f34-449e-9493-c5af66f3299d",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"cardType\":\"VISA\",\r\n   \"cardNumber\":\"4970100000000055\",\r\n   \"expirationMonth\":12,\r\n   \"expirationYear\":2025,\r\n   \"cvv\":\"100\",\r\n   \"nameOnCard\":\"PORTADOR CARTÃO DE CREDITO\",\r\n   \"holderTaxId\":{  \r\n      \"taxId\":\"85103848007\",\r\n      \"country\":\"BRA\"\r\n   },\r\n   \"alias\":\"Credicard\",\r\n   \"address\":{  \r\n      \"logradouro\":\"LOGRADOURO PORTADOR CARTÃO DE CREDITO\",\r\n      \"numero\":\"800\",\r\n      \"bairro\":\"BAIRRO PORTADOR CARTÃO DE CREDITO\",\r\n      \"cidade\":\"CIDADE PORTADOR CARTÃO DE CREDITO\",\r\n      \"estado\":\"SP\",\r\n      \"cep\":\"13100999\",\r\n      \"pais\":\"BRA\"\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/client/{{accountHolderId}}/account/{{accountId}}/wallet",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"client",
+						"{{accountHolderId}}",
+						"account",
+						"{{accountId}}",
+						"wallet"
+					]
+				},
+				"description": "Recharge a mobile phone number"
+			},
+			"response": []
+		},
+		{
+			"name": "11 - Sell/Receive by reading the QR Code",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "24f42744-9ce9-4af2-8b17-89b915acc860",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"externalIdentifier\": \"{{Sequencial}}\",\r\n    \"myAccount\": \r\n        {    \r\n      \"accountId\": \"{{accountId}}\"\r\n      },\r\n    \"paymentInfo\": \r\n        {\r\n            \"transactionType\": \"DigitalCheck\",\r\n                \"digitalCheck\": {\r\n                \"document\": \"1240864833068500614508357399767332612955868733670054277437124245249187532128356625218170604732652316896778697119069232386908121508003335207984210380948018893346986101089104308527121967938447184833883415256399757917834723778307344409919775134304569206093734226929302226897028137842554386032954112430700097704162068022564124236033976449216731486395154841121969497308763821900004496723064048419750799822105080871688220891900869626388948945901787782403470912119617225048484130652987340299618348973172160293019209945991331309389795067173793489444559775432\",\r\n                \"expectedValue\": \"15.00\",\r\n                \"deviceUUID\":\"ab42767f78eea601\"\r\n            }\r\n        }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/payments",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"payments"
+					]
+				},
+				"description": "By presenting a QR Code generated by our library (in our App) you could get a string that will be used as a parameter to this API, perfoming a payment between the sender (the person that presented the QR Code) and the recipient (the person that reads the QR Code)"
+			},
+			"response": []
+		},
+		{
+			"name": "12 - Pay a previous Request Money generated by a third part",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6056a068-1e70-4449-866d-0581de03168c",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"paymentInfo\": {\r\n    \"paymentType\": \"InternalTransfer\"\r\n  },\r\n  \"externalIdentifier\": \"C259A928-7FB6-50CA-D467-A3A57570FFB7\"\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/account/{{accountId}}/transaction/E72FAFCC-BBBA-9F31-CBCB-B09644ECCB31/settlement",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"account",
+						"{{accountId}}",
+						"transaction",
+						"E72FAFCC-BBBA-9F31-CBCB-B09644ECCB31",
+						"settlement"
+					]
+				},
+				"description": "Once you have generated a request money (i.e. an e-commerce calling server API to send a request of payment to some customer), on this API you will execute the payment by indicating the timeline ID from that request money (see timeline API). By execute payment we mean, you will conclude that request of payment initiated by someone trusted."
+			},
+			"response": []
+		},
+		{
+			"name": "13 - Asks for a withdraw",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d662259d-fe9f-448d-b16d-613b97e0d903",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"externalIdentifier\": \"{{Sequencial}}\",\r\n  \"value\": \"103.00\",\r\n  \"currency\": \"BRL\",\r\n  \"senderComment\": \"TED para banco\",\r\n  \"withdrawInfo\": {\r\n    \"withdrawType\": \"BankTransfer\",\r\n    \"bankTransfer\": {\r\n      \"bankDestination\": \"104\",\r\n      \"branchDestination\": \"3690\",\r\n      \"accountDestination\": \"9876\",\r\n      \"accountDigitDestination\": \"5\",\r\n      \"name\": \"CORRENTISTA Caixa Economica Federal 11998760870\",\r\n      \"taxIdentifier\": {\r\n        \"taxId\": \"25280445851\",\r\n        \"country\": \"BRA\"\r\n      },\r\n      \"personType\": \"PERSON\"\r\n    }\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/account/{{accountId}}/draft",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"account",
+						"{{accountId}}",
+						"draft"
+					]
+				},
+				"description": "This API let your customer ask for a withdraw to his external account (i.e in another institution, such as TED/DOC in Brazil)\n\n** NOTE\n* It's only possible to ask for a withdraw to same ownership bank accounts\n* it's possible to define fees for this operation"
+			},
+			"response": []
+		},
+		{
+			"name": "14 - End the log in Session",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2a94b8b1-37fd-47c1-9ffc-72a89805a7ef",
+						"exec": [
+							"// Função para gerar número sequencial para evitar idempotência\r",
+							"function sequencial()\r",
+							"{\r",
+							" var sequencial = environment[\"Sequencial\"].toNumber() + 1;\r",
+							" return sequencial;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"function gera_random(n)\r",
+							"{\r",
+							" var ranNum = Math.round(Math.random()*n);\r",
+							" return ranNum;\r",
+							"}\r",
+							"\r",
+							" \r",
+							"// Função para retornar o resto da divisao entre números (mod)\r",
+							"function mod(dividendo,divisor)\r",
+							"{\r",
+							" return Math.round(dividendo - (Math.floor(dividendo/divisor)*divisor));\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CPF válidos\r",
+							"function cpf()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = gera_random(n);\r",
+							" var d1 = n9*2+n8*3+n7*4+n6*5+n5*6+n4*7+n3*8+n2*9+n1*10;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n9*3+n8*4+n7*5+n6*6+n5*7+n4*8+n3*9+n2*10+n1*11;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+d1+d2;\r",
+							"}\r",
+							" \r",
+							"// Função que gera números de CNPJ válidos\r",
+							"function cnpj()\r",
+							"{\r",
+							" var n = 9;\r",
+							" var n1 = gera_random(n);\r",
+							" var n2 = gera_random(n);\r",
+							" var n3 = gera_random(n);\r",
+							" var n4 = gera_random(n);\r",
+							" var n5 = gera_random(n);\r",
+							" var n6 = gera_random(n);\r",
+							" var n7 = gera_random(n);\r",
+							" var n8 = gera_random(n);\r",
+							" var n9 = 0;//gera_random(n);\r",
+							" var n10 = 0;//gera_random(n);\r",
+							" var n11 = 0;//gera_random(n);\r",
+							" var n12 = 1;//gera_random(n);\r",
+							" var d1 = n12*2+n11*3+n10*4+n9*5+n8*6+n7*7+n6*8+n5*9+n4*2+n3*3+n2*4+n1*5;\r",
+							" d1 = 11 - ( mod(d1,11) );\r",
+							" if (d1>=10) d1 = 0;\r",
+							" var d2 = d1*2+n12*3+n11*4+n10*5+n9*6+n8*7+n7*8+n6*9+n5*2+n4*3+n3*4+n2*5+n1*6;\r",
+							" d2 = 11 - ( mod(d2,11) );\r",
+							" if (d2>=10) d2 = 0;\r",
+							" return ''+n1+n2+n3+n4+n5+n6+n7+n8+n9+n10+n11+n12+d1+d2;\r",
+							"}\r",
+							"\r",
+							"//Armazenando Variáveis para o teste\r",
+							"postman.setEnvironmentVariable(\"CPF\", cpf());\r",
+							"postman.setEnvironmentVariable(\"Sequencial\", sequencial());\r",
+							"\r",
+							"// ========================================================================="
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{url}}/v1/edge/logout",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"v1",
+						"edge",
+						"logout"
+					]
+				},
+				"description": "Perform the log out from the account that is being used"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "9a563a4f-e38f-412c-81cc-86864a54b42a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d830f8c7-5135-4b6e-bc7f-cce26a3c5ca7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
