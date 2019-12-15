@@ -2,6 +2,7 @@ package com.hackagr1d.team4.services;
 
 import com.hackagr1d.team4.domain.model.Cotacao;
 
+import com.hackagr1d.team4.rest.RestClient;
 import com.hackagr1d.team4.rest.vo.CotacaoRequest;
 import com.hackagr1d.team4.rest.vo.CotacaoResponse;
 import org.slf4j.Logger;
@@ -10,20 +11,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CotacaoService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CotacaoService.class);
+    private RestClient restClient;
 
     @Autowired
-    public CotacaoService(){
+    public CotacaoService(final RestClient restClient){
+        this.restClient = restClient;
     }
 
     public CotacaoResponse getCotacoes(CotacaoRequest request) {
 
         LOGGER.info("[Travelace - Seguro Viagens] Buscado cotações - Request["+request +"].");
+
+        try{
+            final String url = "https://gateway.gr1d.io/sandbox/travelace/v1/Cotacao";
+
+            final Map<String, String> headers = new HashMap<>();
+            headers.put("Content-Type","application/json");
+            headers.put("X-Api-Key","b7483bb4-f7f9-4521-a047-223fc550a1cb");
+
+            restClient.postForObject(url, headers, Void.class, request);
+            //Mocking response for presentation.
+        }catch(Exception e){
+            ;
+        }
+
+
         CotacaoResponse response =new CotacaoResponse();
         List<Cotacao> cotacoes = new ArrayList<>();
         {
